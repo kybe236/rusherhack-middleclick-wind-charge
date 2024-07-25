@@ -1,12 +1,11 @@
 package org.kybe;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.item.Items;
+import org.lwjgl.glfw.GLFW;
 import org.rusherhack.client.api.RusherHackAPI;
 import org.rusherhack.client.api.events.client.input.EventMouse;
 import org.rusherhack.client.api.events.network.EventPacket;
@@ -14,6 +13,7 @@ import org.rusherhack.client.api.feature.module.IModule;
 import org.rusherhack.client.api.utils.ChatUtils;
 import org.rusherhack.core.event.stage.Stage;
 import org.rusherhack.core.event.subscribe.Subscribe;
+import org.rusherhack.core.interfaces.IToggleable;
 import org.rusherhack.core.setting.BooleanSetting;
 
 import java.awt.*;
@@ -27,6 +27,7 @@ public class Listener implements EventListener {
 	private void onMouseInput(EventMouse.Key event) {
 		try {
 			if (event.getButton() != 2) return;
+			if (event.getAction() != GLFW.GLFW_PRESS) return;
 			Optional<IModule> optionalModule = RusherHackAPI.getModuleManager().getFeature("middleclick");
 			if (optionalModule.isEmpty()) {
 				ChatUtils.print("Module not found", Style.EMPTY.withColor(Color.red.getRGB()));
@@ -56,7 +57,7 @@ public class Listener implements EventListener {
 				mc.gameMode.handleInventoryMouseClick(mc.player.containerMenu.containerId, slot, currentSlot, ClickType.SWAP, mc.player);
 				mc.setScreen(null);
 			} else {
-				ChatUtils.print("No swap performed. Either item not found or already in selected slot.");
+				return;
 			}
 
 			if (boostJump.getValue()) {
@@ -72,10 +73,5 @@ public class Listener implements EventListener {
 		} catch (Exception e){
 			ChatUtils.print("Error:" + e.getMessage(), Style.EMPTY.withColor(Color.red.getRGB()));
 		}
-	}
-
-	@Subscribe
-	private void onJump(EventPacket.Send event) {
-
 	}
 }
