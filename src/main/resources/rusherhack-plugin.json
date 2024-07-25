@@ -1,0 +1,12 @@
+{
+  "Plugin-Class": "org.kybe.MiddleclickWindcharge",
+  "Name": "Middleclick Windcharge",
+  "Version": "${plugin_version}",
+  "Description": "Middleclick Windcharge",
+  "Authors": [
+    "kybe236"
+  ],
+  "Minecraft-Versions": [
+    "1.21"
+  ]
+}
