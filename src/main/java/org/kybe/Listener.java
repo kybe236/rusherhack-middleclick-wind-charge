@@ -37,6 +37,7 @@ public class Listener implements EventListener {
 	private void onMouseInput(EventMouse.Key event) {
 		if (isMiddleClickPress(event)) {
 			handleMiddleClick();
+			event.setCancelled(true);
 		}
 	}
 
@@ -116,7 +117,7 @@ public class Listener implements EventListener {
 	 */
 	private void handleBoostJump(BooleanSetting boostJump, BooleanSetting boostJumpMidAir) {
 		if (boostJump.getValue()) {
-			if (!(boostJumpMidAir.getValue() && mc.player.onGround()) | boostJumpMidAir.getValue()) {
+			if ((!boostJumpMidAir.getValue() && mc.player.onGround()) | boostJumpMidAir.getValue()) {
 				mc.player.jumpFromGround();
 			}
 		}
