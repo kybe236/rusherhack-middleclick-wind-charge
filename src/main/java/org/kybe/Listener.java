@@ -35,7 +35,10 @@ public class Listener implements EventListener {
 	 */
 	@Subscribe
 	private void onMouseInput(EventMouse.Key event) {
-		if (isMiddleClickPress(event)) {
+		ToggleableModule Module = (ToggleableModule) RusherHackAPI.getModuleManager().getFeature("middleclick").get();
+
+
+		if (isMiddleClickPress(event) && Module.isToggled()) {
 			handleMiddleClick();
 			event.setCancelled(true);
 		}
